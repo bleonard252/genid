@@ -1,0 +1,49 @@
+name: genid
+version: "0.1.0"
+about: Generate various types of IDs.
+author: Blake Leonard <bleonard252@rocketmail.com>
+
+# AppSettings can be defined as a list and are **not** ascii case sensitive
+settings:
+    - SubcommandRequiredElseHelp
+
+# All Args must be defined in the 'args:' list where the name of the arg, is the
+# key to a Hash object
+args:
+    - verbose:
+        long: verbose
+        short: v
+        multiple: true
+        help: Increase the verbosity of the generator for debugging purposes.
+
+subcommands:
+    - uuid1:
+        about: |
+            Generate a version 1 UUID, which is based on your MAC address and current timestamp.
+            The epoch for version 1 UUIDs is 15 October 1582.
+        aliases:
+            - uuidv1
+    - uuid3:
+        about: |
+            Generate a version 3 UUID, which is based on a namespace UUID and a string name.
+            This version uses MD5.
+        aliases:
+            - uuidv3
+        args_from_usage:
+            - <namespace> 'A UUID to use as the namespace.'
+            - <name> 'The string to use as the name.'
+    - uuid4:
+        about: |
+            Generate a version 4 UUID, which uses random bytes.
+        aliases:
+            - uuidv4
+            - uuid
+    - uuid5:
+        about: |
+            Generate a version 5 UUID, which is based on a namespace UUID and a string name.
+            This version uses SHA1.
+        aliases:
+            - uuidv5
+        args_from_usage:
+            - <namespace> 'A UUID to use as the namespace.'
+            - <name> 'The string to use as the name.'
