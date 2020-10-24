@@ -24,14 +24,21 @@ subcommands:
         aliases:
             - uuidv1
     - uuid3:
+        usage: genid uuid3 <namespace> <name>
         about: |
             Generate a version 3 UUID, which is based on a namespace UUID and a string name.
             This version uses MD5.
         aliases:
             - uuidv3
-        args_from_usage:
-            - <namespace> 'A UUID to use as the namespace.'
-            - <name> 'The string to use as the name.'
+        args:
+            - namespace:
+                help: A UUID to use as the namespace.
+                required: true
+                index: 1
+            - name:
+                help: The string to use as the name.
+                required: true
+                index: 2
     - uuid4:
         about: |
             Generate a version 4 UUID, which uses random bytes.
@@ -39,11 +46,18 @@ subcommands:
             - uuidv4
             - uuid
     - uuid5:
+        usage: genid uuid5 <namespace> <name>
         about: |
             Generate a version 5 UUID, which is based on a namespace UUID and a string name.
             This version uses SHA1.
         aliases:
             - uuidv5
-        args_from_usage:
-            - <namespace> 'A UUID to use as the namespace.'
-            - <name> 'The string to use as the name.'
+        args:
+            - namespace:
+                help: A UUID to use as the namespace.
+                required: true
+                index: 1
+            - name:
+                help: The string to use as the name.
+                required: true
+                index: 2
