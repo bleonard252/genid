@@ -95,6 +95,7 @@ dependencies = [
  "clap",
  "num-bigint",
  "num-traits",
+ "rand",
  "sha2",
  "uuid",
 ]

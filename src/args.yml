@@ -95,3 +95,18 @@ subcommands:
                 help: The "real ID" to use, as a string.
                 required: true
                 index: 1
+    - snowflake:
+        usage: genid gaid <realid>
+        about: |
+            Generate a basic snowflake based on the current timestamp.
+        aliases:
+            - sf
+            - snow
+        args:
+            - epoch:
+                help: The custom offset as a UNIX timestamp in milliseconds to use as the epoch.
+                required: false
+                index: 1
+        # args:
+        #     - discord:
+        #         help: Use the Discord epoch.

@@ -17,6 +17,7 @@ use clap;
 //use uuid::Uuid;
 mod uuids;
 mod gaid;
+mod snowflake;
 
 fn main() {
     //println!("Hello, world!");
@@ -43,6 +44,11 @@ fn main() {
         Some("gaid") => {
             let argm = matches.subcommand_matches("gaid").unwrap();
             print!("{}", gaid::new(argm.value_of("realid").expect("FATAL: Real ID not provided!")));
+        }
+        Some("snowflake") => {
+            let argm = matches.subcommand_matches("snowflake").unwrap();
+            const DISCORD_EPOCH: &str = "1420070400000";
+            print!("{}", snowflake::snowflake(argm.value_of("epoch").unwrap_or(&format!("{}", DISCORD_EPOCH))));
         }
         Some(&_) => {}
         None => {}
