@@ -10,3 +10,6 @@ description = "Generate various types of IDs from the command line"
 [dependencies]
 uuid = { version = "0.8.1", features = ["serde", "v1", "v3", "v4", "v5"] }
 clap = { version = "~2.33.3", features = ["yaml"] }
+sha2 = "0.9.1"
+num-bigint = "0.3.0"
+num-traits = "0.2.12"

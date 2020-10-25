@@ -61,3 +61,37 @@ subcommands:
                 help: The string to use as the name.
                 required: true
                 index: 2
+    - uuid5:
+        usage: genid uuid5 <namespace> <name>
+        about: |
+            Generate a version 5 UUID, which is based on a namespace UUID and a string name.
+            This version uses SHA1.
+        aliases:
+            - uuidv5
+        args:
+            - namespace:
+                help: A UUID to use as the namespace.
+                required: true
+                index: 1
+    - uuid5:
+        usage: genid uuid5 <namespace> <name>
+        about: |
+            Generate a version 5 UUID, which is based on a namespace UUID and a string name.
+            This version uses SHA1.
+        aliases:
+            - uuidv5
+        args:
+            - namespace:
+                help: A UUID to use as the namespace.
+                required: true
+                index: 1
+    - gaid:
+        usage: genid gaid <realid>
+        about: |
+            Generate a generic anonymous identifier (GAID). It uses the hash of a "real ID"
+            suffixed with the same timestamp at the end of the GAID.
+        args:
+            - realid:
+                help: The "real ID" to use, as a string.
+                required: true
+                index: 1

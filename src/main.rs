@@ -1,6 +1,7 @@
 use clap;
 //use uuid::Uuid;
 mod uuids;
+mod gaid;
 
 fn main() {
     //println!("Hello, world!");
@@ -23,6 +24,10 @@ fn main() {
                 argm.value_of("namespace").expect("FATAL: Namespace not provided!"),
                 argm.value_of("name").expect("FATAL: Name not provided!"),
             ));
+        }
+        Some("gaid") => {
+            let argm = matches.subcommand_matches("gaid").unwrap();
+            print!("{}", gaid::new(argm.value_of("realid").expect("FATAL: Real ID not provided!")));
         }
         Some(&_) => {}
         None => {}
