@@ -13,7 +13,7 @@ pub fn v1() -> String {
 }
 
 pub fn v3(namespace: &str, name: &str) -> String {
-    let nsid = Uuid::parse_str(namespace).unwrap_or_default();
+    let nsid = Uuid::parse_str(namespace).expect("Invalid namespace UUID");
     let namebytes = name.as_bytes();
     let id = Uuid::new_v3(&nsid, namebytes);
     return id.to_hyphenated().to_string();
@@ -25,7 +25,7 @@ pub fn v4() -> String {
 }
 
 pub fn v5(namespace: &str, name: &str) -> String {
-    let nsid = Uuid::parse_str(namespace).unwrap_or_default();
+    let nsid = Uuid::parse_str(namespace).expect("Invalid namespace UUID");
     let namebytes = name.as_bytes();
     let id = Uuid::new_v5(&nsid, namebytes);
     return id.to_hyphenated().to_string();
