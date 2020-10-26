@@ -87,3 +87,15 @@ subcommands:
         # args:
         #     - discord:
         #         help: Use the Discord epoch.
+        #         short: d
+    - learn:
+        usage: genid learn <id>
+        about: |
+            Analyze and learn about a particular ID.
+        aliases:
+            - analyze
+        args:
+            - id:
+                help: The ID to learn about.
+                required: true
+                index: 1

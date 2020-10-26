@@ -18,6 +18,7 @@ use clap;
 mod uuids;
 mod gaid;
 mod snowflake;
+mod learn;
 
 fn main() {
     //println!("Hello, world!");
@@ -49,6 +50,10 @@ fn main() {
             let argm = matches.subcommand_matches("snowflake").unwrap();
             const DISCORD_EPOCH: &str = "1420070400000";
             print!("{}", snowflake::snowflake(argm.value_of("epoch").unwrap_or(&format!("{}", DISCORD_EPOCH))));
+        }
+        Some("learn") => {
+            let argm = matches.subcommand_matches("learn").unwrap();
+            learn::learn(argm.value_of("id").unwrap());
         }
         Some(&_) => {}
         None => {}
