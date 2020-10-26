@@ -31,10 +31,16 @@ pub fn learn(id: &str) {
     }
     if id.len() <= 21 && id.len() >= 10 && is_numid {
         //Assume it might be a snowflake
-        let tsnum = (numid.to_i128().unwrap() >> 22) + 1420070400000;
+        let nid = numid.to_i128().unwrap();
+        let tsnum = (nid >> 22) + 1420070400000;
+        let workid = (nid & 0x3E0000) >> 17;
+        let procid = (nid & 0x1F000) >> 12;
+        let seqid = nid & 0xFFF;
         //let tsdur = std::time::Duration::from_millis(tsnum.try_into().unwrap());
         //let tsdur = chrono::Duration::milliseconds(tsnum.try_into().unwrap());
-        let ts = chrono::Utc.timestamp_millis(tsnum.try_into().unwrap());
-        println!("-----\nPotential type: Snowflake\nTimestamp: {}", ts)
+        let tsutc = chrono::Utc.timestamp_millis(tsnum.try_into().unwrap());
+        let tsloc = chrono::Local.timestamp_millis(tsnum.try_into().unwrap());
+        println!("-----\nPotential type: Discord Snowflake\nTime: {}\nTime: {}\nWorker ID: {}\nProcess ID: {}\nSequence number: {}", 
+            tsutc, tsloc, workid, procid, seqid)
     }
 }
