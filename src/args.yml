@@ -45,6 +45,7 @@ subcommands:
         aliases:
             - uuidv4
             - uuid
+            - guid
     - uuid5:
         usage: genid uuid5 <namespace> <name>
         about: |
@@ -61,30 +62,6 @@ subcommands:
                 help: The string to use as the name.
                 required: true
                 index: 2
-    - uuid5:
-        usage: genid uuid5 <namespace> <name>
-        about: |
-            Generate a version 5 UUID, which is based on a namespace UUID and a string name.
-            This version uses SHA1.
-        aliases:
-            - uuidv5
-        args:
-            - namespace:
-                help: A UUID to use as the namespace.
-                required: true
-                index: 1
-    - uuid5:
-        usage: genid uuid5 <namespace> <name>
-        about: |
-            Generate a version 5 UUID, which is based on a namespace UUID and a string name.
-            This version uses SHA1.
-        aliases:
-            - uuidv5
-        args:
-            - namespace:
-                help: A UUID to use as the namespace.
-                required: true
-                index: 1
     - gaid:
         usage: genid gaid <realid>
         about: |
