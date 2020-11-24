@@ -44,7 +44,11 @@ fn main() {
         }
         Some("gaid") => {
             let argm = matches.subcommand_matches("gaid").unwrap();
-            print!("{}", gaid::new(argm.value_of("realid").expect("FATAL: Real ID not provided!")));
+            print!("{}", gaid::new(
+                /* Real ID */  argm.value_of("realid").expect("FATAL: Real ID not provided!"), 
+                /* truncate */ argm.is_present("truncate"),
+                /* force 11 */ if argm.is_present("version-code-11") {11} else {10}
+            ));
         }
         Some("snowflake") => {
             let argm = matches.subcommand_matches("snowflake").unwrap();

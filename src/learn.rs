@@ -21,6 +21,8 @@ use chrono;
 use chrono::TimeZone;
 use uuid::Uuid;
 
+#[path="gaid_helper.rs"] mod gaid_helper;
+
 pub fn learn(id: &str) {
     // "Negative one" indicates an invalid numeric ID here.
     let is_numid: bool;
@@ -37,6 +39,7 @@ pub fn learn(id: &str) {
         }
         Err(_) => {} //do nothing
     }
+    if id.len() >= 21 && is_numid {println!("{}", gaid(id));}
 }
 
 fn snowflake(_id: &str, numid: BigUint) -> String {
@@ -60,4 +63,27 @@ fn uuidlearn(id: Uuid) -> String {
     //if there's anything else we can determine from a UUID,
     //get it here
     return result;
+}
+
+fn gaid(id: &str) -> String {
+    //=== Version Code ===//
+    let vc: &str;
+    if id.starts_with("10") {vc = "10";}
+    else if id.starts_with("11") {vc = "11";}
+    else {vc = "unknown/invalid";}
+    //=== Truncation Flag ===//
+    let trunc: bool = if id.starts_with("111") {true} else {false};
+    let tsnum = i128::from_str_radix(if id.starts_with("111") {id.split_at(41).1} 
+    else if id.starts_with("110") {id.split_at(80).1}
+    else /* if id.starts_with("10") */ {id.split_at(79).1}, 10).unwrap() + 1577836800;
+    let tsutc = chrono::Utc.timestamp_millis(tsnum.try_into().unwrap());
+    let tsloc = chrono::Local.timestamp_millis(tsnum.try_into().unwrap());
+    return format!("-----\nPotential Type: Generic Anonymous ID (GAID)\nVersion Code: {vc}{tr}\nTimestamp: {ts}\nTime: {tu}\nTime: {tl}",
+        vc = vc,
+        ts = tsnum,
+        tu = tsutc,
+        tl = tsloc,
+        tr = if gaid_helper::gaid_can_trunc(vc) && trunc {"\nTruncated: YES"} 
+            else if gaid_helper::gaid_can_trunc(vc) {"\nTruncated: NO"} else {""}
+    )
 }

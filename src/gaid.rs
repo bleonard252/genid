@@ -18,12 +18,9 @@ use std::ops::Add;
 use std::time::{SystemTime, UNIX_EPOCH, Duration};
 use num_bigint::BigUint;
 use num_traits::Num;
-pub fn new(real: &str) -> String {
-    return vc10(real);
-    // Eventually, this logic will be rewritten to 
-    // allow for other version codes.
-    // At this time, however, there is only
-    // version code 10.
+pub fn new(real: &str, trunc: bool, vc: i8) -> String {
+    if trunc || vc == 10 {return vc11(real, trunc);}
+    else {return vc10(real);};
 }
 
 fn vc10(real: &str) -> String {
@@ -35,4 +32,17 @@ fn vc10(real: &str) -> String {
     let digest10 = BigUint::from_str_radix(&format!("{:x}", digest), 16).unwrap();
     return format!("{version}{digest10:077}{timestamp}", version = VERSION, digest10 = digest10, timestamp = timestamp.as_millis());
     //let bytes = String::from_utf8(digest.to_vec()).unwrap();
+}
+fn vc11(real: &str, trunc: bool) -> String {
+    const VERSION: i32 = 11;
+    // {version}{digest16 in base10 (len: 78 or 39)}{timestamp}
+    let timestamp = SystemTime::now().duration_since(UNIX_EPOCH.add(Duration::from_millis(1577836800))).unwrap();
+    let digest = Sha256::digest((real.to_owned() + &format!("{}", timestamp.as_millis())).as_bytes());
+    let digest10 = BigUint::from_str_radix(&format!("{:x}", digest), 16).unwrap();
+    let digest11 = &mut String::from(format!("{digest10:077}", digest10 = digest10));
+    let truncdigit = if trunc {1} else {0};
+    if trunc {
+        digest11.truncate(38);
+    }
+    return format!("{version}{truncdigit}{digest11}{timestamp}", version = VERSION, truncdigit = truncdigit, digest11 = digest11, timestamp = timestamp.as_millis());
 }

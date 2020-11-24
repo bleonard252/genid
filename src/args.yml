@@ -64,14 +64,28 @@ subcommands:
                 index: 2
     - gaid:
         usage: genid gaid <realid>
+        aliases:
+            - gaid10
         about: |
             Generate a generic anonymous identifier (GAID). It uses the hash of a "real ID"
-            suffixed with the same timestamp at the end of the GAID.
+            suffixed with the same timestamp at the end of the GAID. Supports version codes
+            10 and 11, using them based on requirements.
         args:
             - realid:
                 help: The "real ID" to use, as a string.
                 required: true
                 index: 1
+            - version-code-11:
+                long: version-code-11
+                short: "1"
+                aliases:
+                    - vc11
+                    - "11"
+                help: Force the use of version code 11.
+            - truncate:
+                long: truncate
+                short: t
+                help: Use a shorter, yet possibly less secure, GAID.
     - snowflake:
         usage: genid gaid <realid>
         about: |
