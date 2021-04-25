@@ -1,5 +1,5 @@
 name: genid
-version: "0.1.0"
+version: "1.0.0"
 about: Generate various types of IDs.
 author: Blake Leonard <bleonard252@rocketmail.com>
 
@@ -15,6 +15,10 @@ args:
         short: v
         multiple: true
         help: Increase the verbosity of the generator for debugging purposes.
+    - script:
+        help: Force script behavior (no newline) on output.
+        short: s
+        long: script
 
 subcommands:
     - uuid1:
@@ -63,9 +67,10 @@ subcommands:
                 required: true
                 index: 2
     - gaid:
-        usage: genid gaid <realid>
+        usage: genid gaid [options...] <realid>
         aliases:
             - gaid10
+            - gaid11
         about: |
             Generate a generic anonymous identifier (GAID). It uses the hash of a "real ID"
             suffixed with the same timestamp at the end of the GAID. Supports version codes
@@ -87,17 +92,23 @@ subcommands:
                 short: t
                 help: Use a shorter, yet possibly less secure, GAID.
     - snowflake:
-        usage: genid gaid <realid>
+        usage: genid snowflake [options...] [epoch]
         about: |
             Generate a basic snowflake based on the current timestamp.
         aliases:
             - sf
             - snow
+            - discord
+            - twitter
         args:
             - epoch:
                 help: The custom offset as a UNIX timestamp in milliseconds to use as the epoch.
                 required: false
                 index: 1
+            - timestamp:
+                help: Log the timestamp.
+                long: timestamp
+                short: t
         # args:
         #     - discord:
         #         help: Use the Discord epoch.
@@ -106,8 +117,11 @@ subcommands:
         usage: genid learn <id>
         about: |
             Analyze and learn about a particular ID.
+            Check the type, version, and other information stored in an ID.
         aliases:
             - analyze
+            - check
+            - verify
         args:
             - id:
                 help: The ID to learn about.

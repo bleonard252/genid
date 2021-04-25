@@ -53,7 +53,9 @@ fn main() {
         Some("snowflake") => {
             let argm = matches.subcommand_matches("snowflake").unwrap();
             const DISCORD_EPOCH: &str = "1420070400000";
-            print!("{}", snowflake::snowflake(argm.value_of("epoch").unwrap_or(&format!("{}", DISCORD_EPOCH))));
+            print!("{}", snowflake::snowflake(
+                /* Epoch */ argm.value_of("epoch").unwrap_or(&format!("{}", DISCORD_EPOCH)), 
+                /* Timestamp */ argm.is_present("timestamp")));
         }
         Some("learn") => {
             let argm = matches.subcommand_matches("learn").unwrap();
@@ -62,4 +64,5 @@ fn main() {
         Some(&_) => {}
         None => {}
     }
+    if !matches.is_present("script") {print!("\n");}
 }
