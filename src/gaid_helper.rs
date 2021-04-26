@@ -15,6 +15,6 @@
 */
 
 pub fn gaid_can_trunc(vc: &str) -> bool {
-    let possible = ["10"];
+    let possible = ["11"];
     return possible.contains(&vc);
 }

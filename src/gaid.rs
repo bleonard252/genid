@@ -60,15 +60,16 @@ pub fn check(against: &str, realid: &str) -> String {
     if gaid_helper::gaid_can_trunc(version) {
         trunc = if against.starts_with("111") {true} else {false};
     };
-    // 10 38915219676358542398255857810107319750210715393547047006020607949241635562149 1617804024310
+    // 
     if version == "10" || version == "11" {
         let substr = against.split_at(if version == "10" {2} else {3}).1.split_at(if trunc == false {77} else {38});
         let tsnum = i128::from_str_radix(substr.1, 10).expect("FATAL: Timestamp not found!");
         let digest = Sha256::digest((realid.to_owned() + &format!("{}", tsnum)).as_bytes());
         let digestnum = BigUint::from_str_radix(&format!("{:x}", digest), 16).unwrap();
         //let substrnum = BigUint::from_str_radix(substr.0, 16).unwrap();
-        println!("{d} == {s}", d = digestnum.to_str_radix(10), s = substr.0);
-        if digestnum.to_str_radix(10) == substr.0 {return format!("The Real ID matches the GAID.")}
+        let mut digeststr = digestnum.to_str_radix(10);
+        if trunc {digeststr.truncate(38)};
+        if digeststr == substr.0 {return format!("The Real ID matches the GAID.")}
         else {return format!("The Real ID does not match the GAID.")};
     };
     return format!("Invalid check ID");
