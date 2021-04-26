@@ -47,7 +47,14 @@ fn main() {
             print!("{}", gaid::new(
                 /* Real ID */  argm.value_of("realid").expect("FATAL: Real ID not provided!"), 
                 /* truncate */ argm.is_present("truncate"),
-                /* force 11 */ if argm.is_present("version-code-11") {11} else {10}
+                /* force 11 */ if argm.is_present("version-code-11") || argm.subcommand_name().unwrap_or("gaid") == "gaid11" {11} else {10}
+            ));
+        }
+        Some("gaid-check") => {
+            let argm = matches.subcommand_matches("gaid-check").unwrap();
+            print!("{}", gaid::check(
+                  /* GAID */   argm.value_of("gaid").expect("FATAL: GAID not provided!"),
+                /* Real ID */  argm.value_of("realid").expect("FATAL: Real ID not provided!")
             ));
         }
         Some("snowflake") => {

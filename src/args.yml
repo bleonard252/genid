@@ -1,5 +1,5 @@
 name: genid
-version: "1.0.0"
+version: "1.1.0"
 about: Generate various types of IDs.
 author: Blake Leonard <bleonard252@rocketmail.com>
 
@@ -90,7 +90,26 @@ subcommands:
             - truncate:
                 long: truncate
                 short: t
-                help: Use a shorter, yet possibly less secure, GAID.
+                help: Use a shorter, yet possibly less secure, GAID. Implies --version-code-11
+    - gaid-check:
+        usage: genid gaid-check <gaid> <realid>
+        aliases:
+            - gaidcheck
+            - gaidverify
+            - gaid-verify
+        about: |
+            Checks the given GAID against a real ID. Returns a string containing "matches" if
+            the GAID was generated with the given real ID, and a string containing
+            "does not match" otherwise.
+        args:
+            - gaid:
+                help: The GAID to verify the real ID against.
+                required: true
+                index: 1
+            - realid:
+                help: The real ID to check against the GAID.
+                required: true
+                index: 2
     - snowflake:
         usage: genid snowflake [options...] [epoch]
         about: |
